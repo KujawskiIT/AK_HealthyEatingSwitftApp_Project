@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Meal: Identifiable, Decodable, Hashable {
+struct Meal: Identifiable, Codable, Hashable {
     let id: String
     let name: String
     let category: String
@@ -53,6 +53,16 @@ struct Meal: Identifiable, Decodable, Hashable {
         }
         ingredients = list
     }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(name, forKey: .name)
+        try container.encode(category, forKey: .category)
+        try container.encode(thumbnailURL, forKey: .thumbnailURL)
+        try container.encode(instructions, forKey: .instructions)
+        try container.encode(area, forKey: .area)
+    }
 }
 
 struct MealResponse: Decodable {
@@ -63,7 +73,7 @@ struct CategoryResponse: Decodable {
     let categories: [MealCategory]
 }
 
-struct MealCategory: Identifiable, Decodable {
+struct MealCategory: Identifiable, Codable {
     let id: String
     let name: String
     let thumbnailURL: String
