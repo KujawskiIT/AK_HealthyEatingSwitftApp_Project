@@ -31,7 +31,7 @@ struct DiaryView: View {
                     saveEntries()
                 }
             }
-            .navigationTitle("Dziennik")
+            .navigationTitle("Diary")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
@@ -41,11 +41,11 @@ struct DiaryView: View {
                     }
                 }
             }
-            .alert("Dodaj posiłek", isPresented: $showingAdd) {
-                TextField("Nazwa posiłku", text: $newMealName)
-                TextField("Kalorie", text: $newCalories)
+            .alert("Add meal", isPresented: $showingAdd) {
+                TextField("Meal name", text: $newMealName)
+                TextField("Calories", text: $newCalories)
                     .keyboardType(.numberPad)
-                Button("Dodaj") {
+                Button("Add") {
                     if let kcal = Int(newCalories), !newMealName.isEmpty {
                         let entry = DiaryEntry(mealName: newMealName, calories: kcal, date: Date())
                         entries.append(entry)
@@ -54,7 +54,7 @@ struct DiaryView: View {
                         newCalories = ""
                     }
                 }
-                Button("Anuluj", role: .cancel) {}
+                Button("Cancel", role: .cancel) {}
             }
             .onAppear { loadEntries() }
         }

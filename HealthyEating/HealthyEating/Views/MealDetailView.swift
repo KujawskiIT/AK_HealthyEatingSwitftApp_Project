@@ -18,7 +18,7 @@ struct MealDetailView: View {
     var body: some View {
         Group {
             if isLoading {
-                ProgressView("Ładowanie...")
+                ProgressView("Loading...")
             } else if let error = errorMessage {
                 Text(error).foregroundColor(.red)
             } else if let meal = meal {
@@ -43,7 +43,7 @@ struct MealDetailView: View {
                                 .padding(.horizontal)
                         }
 
-                        Text("Składniki")
+                        Text("Ingredients")
                             .font(.title2).bold()
                             .padding(.horizontal)
 
@@ -52,7 +52,7 @@ struct MealDetailView: View {
                                 .padding(.horizontal)
                         }
 
-                        Text("Instrukcje")
+                        Text("Instructions")
                             .font(.title2).bold()
                             .padding(.horizontal)
 
@@ -80,7 +80,7 @@ struct MealDetailView: View {
                 meal = try await MealService.shared.fetchMealDetail(id: mealId)
                 favouritesVM.loadFavourites()
             } catch {
-                errorMessage = "Nie udało się pobrać szczegółów"
+                errorMessage = "Failed to load details"
             }
             isLoading = false
         }

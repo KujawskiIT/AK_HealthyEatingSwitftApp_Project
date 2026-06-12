@@ -18,7 +18,7 @@ struct FavouritesView: View {
                         Image(systemName: "heart.slash")
                             .font(.system(size: 60))
                             .foregroundColor(.gray)
-                        Text("Brak ulubionych przepisów")
+                        Text("No favourite recipes yet")
                             .foregroundColor(.secondary)
                     }
                 } else {
@@ -40,7 +40,7 @@ struct FavouritesView: View {
                     }
                 }
             }
-            .navigationTitle("Ulubione")
+            .navigationTitle("Favourites")
             .onAppear {
                 viewModel.loadFavourites()
             }

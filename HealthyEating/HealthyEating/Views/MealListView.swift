@@ -14,7 +14,7 @@ struct MealListView: View {
         NavigationStack {
             Group {
                 if viewModel.isLoading {
-                    ProgressView("Ładowanie...")
+                    ProgressView("Loading...")
                 } else if let error = viewModel.errorMessage {
                     Text(error).foregroundColor(.red)
                 } else {
@@ -39,7 +39,7 @@ struct MealListView: View {
             .navigationTitle(viewModel.selectedCategory)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Menu("Kategoria") {
+                    Menu("Category") {
                         ForEach(viewModel.categories, id: \.id) { cat in
                             Button(cat.name) {
                                 viewModel.selectedCategory = cat.name

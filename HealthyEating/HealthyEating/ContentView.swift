@@ -12,17 +12,17 @@ struct ContentView: View {
         TabView {
             MealListView()
                 .tabItem {
-                    Label("Przepisy", systemImage: "fork.knife")
+                    Label("Recipes", systemImage: "fork.knife")
                 }
 
             FavouritesView()
                 .tabItem {
-                    Label("Ulubione", systemImage: "heart.fill")
+                    Label("Favourites", systemImage: "heart.fill")
                 }
 
             DiaryView()
                 .tabItem {
-                    Label("Dziennik", systemImage: "book.fill")
+                    Label("Diary", systemImage: "book.fill")
                 }
         }
     }
