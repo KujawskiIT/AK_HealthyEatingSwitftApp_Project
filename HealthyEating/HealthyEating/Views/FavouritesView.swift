@@ -22,19 +22,26 @@ struct FavouritesView: View {
                             .foregroundColor(.secondary)
                     }
                 } else {
-                    List(viewModel.favourites) { meal in
-                        NavigationLink(destination: MealDetailView(mealId: meal.id)) {
-                            HStack {
-                                AsyncImage(url: URL(string: meal.thumbnailURL)) { image in
-                                    image.resizable().scaledToFill()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 60, height: 60)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                    List {
+                        ForEach(viewModel.favourites) { meal in
+                            NavigationLink(destination: MealDetailView(mealId: meal.id)) {
+                                HStack {
+                                    AsyncImage(url: URL(string: meal.thumbnailURL)) { image in
+                                        image.resizable().scaledToFill()
+                                    } placeholder: {
+                                        ProgressView()
+                                    }
+                                    .frame(width: 60, height: 60)
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
 
-                                Text(meal.name)
-                                    .font(.headline)
+                                    Text(meal.name)
+                                        .font(.headline)
+                                }
+                            }
+                        }
+                        .onDelete { indices in
+                            indices.forEach { i in
+                                viewModel.toggleFavourite(viewModel.favourites[i])
                             }
                         }
                     }
