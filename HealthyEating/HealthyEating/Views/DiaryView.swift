@@ -13,27 +13,42 @@ struct DiaryView: View {
     @State private var newMealName = ""
     @State private var newCalories = ""
 
+    var totalCalories: Int {
+        viewModel.entries.reduce(0) { $0 + $1.calories }
+    }
+
     var body: some View {
         NavigationStack {
             List {
-                ForEach(viewModel.entries) { entry in
-                    VStack(alignment: .leading) {
-                        Text(entry.mealName).font(.headline)
-                        Text("\(entry.calories) kcal")
-                            .foregroundColor(.secondary)
-                        Text(entry.date.formatted(date: .abbreviated, time: .shortened))
-                            .font(.caption)
-                            .foregroundColor(.secondary)
+                Section {
+                    HStack {
+                        Text("Total today")
+                            .font(.headline)
+                        Spacer()
+                        Text("\(totalCalories) kcal")
+                            .font(.headline)
+                            .foregroundColor(.orange)
                     }
                 }
-                .onDelete { viewModel.delete(at: $0) }
+
+                Section("History") {
+                    ForEach(viewModel.entries) { entry in
+                        VStack(alignment: .leading) {
+                            Text(entry.mealName).font(.headline)
+                            Text("\(entry.calories) kcal")
+                                .foregroundColor(.secondary)
+                            Text(entry.date.formatted(date: .abbreviated, time: .shortened))
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                    .onDelete { viewModel.delete(at: $0) }
+                }
             }
             .navigationTitle("Diary")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        showingAdd = true
-                    } label: {
+                    Button { showingAdd = true } label: {
                         Image(systemName: "plus")
                     }
                 }
@@ -54,4 +69,4 @@ struct DiaryView: View {
             .onAppear { viewModel.load() }
         }
     }
-}
+}	

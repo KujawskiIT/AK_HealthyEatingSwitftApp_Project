@@ -36,22 +36,23 @@ struct MealListView: View {
                     }
                 }
             }
-            .navigationTitle(viewModel.selectedCategory)
+            .navigationTitle("Recipes")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Menu("Category") {
-                        ForEach(viewModel.categories, id: \.id) { cat in
-                            Button(cat.name) {
-                                viewModel.selectedCategory = cat.name
-                                Task { await viewModel.loadMeals() }
+                    Menu {
+                        ForEach(viewModel.categories, id: \.self) { category in
+                            Button(category) {
+                                viewModel.selectedCategory = category
+                                Task { await viewModel.fetchMeals() }
                             }
                         }
+                    } label: {
+                        Label(viewModel.selectedCategory, systemImage: "line.3.horizontal.decrease.circle")
                     }
                 }
             }
             .task {
-                await viewModel.loadCategories()
-                await viewModel.loadMeals()
+                await viewModel.fetchCategories()
             }
         }
     }

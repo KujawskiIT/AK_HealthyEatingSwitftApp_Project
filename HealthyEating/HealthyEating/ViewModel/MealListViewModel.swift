@@ -11,28 +11,29 @@ import Combine
 @MainActor
 class MealListViewModel: ObservableObject {
     @Published var meals: [Meal] = []
-    @Published var categories: [MealCategory] = []
-    @Published var selectedCategory: String = "Chicken"
-    @Published var isLoading: Bool = false
+    @Published var categories: [String] = []
+    @Published var selectedCategory: String = "Seafood"
+    @Published var isLoading = false
     @Published var errorMessage: String?
 
-    private let service = MealService.shared
-
-    func loadCategories() async {
+    func fetchCategories() async {
         do {
-            categories = try await service.fetchCategories()
+            categories = try await MealService.shared.fetchCategories().map { $0.name }
+            if let first = categories.first {
+                selectedCategory = first
+            }
+            await fetchMeals()
         } catch {
-            errorMessage = "Nie udało się pobrać kategorii"
+            errorMessage = "Failed to load categories"
         }
     }
 
-    func loadMeals() async {
+    func fetchMeals() async {
         isLoading = true
-        errorMessage = nil
         do {
-            meals = try await service.fetchMeals(category: selectedCategory)
+            meals = try await MealService.shared.fetchMeals(category: selectedCategory)
         } catch {
-            errorMessage = "Nie udało się pobrać przepisów"
+            errorMessage = "Failed to load meals"
         }
         isLoading = false
     }
