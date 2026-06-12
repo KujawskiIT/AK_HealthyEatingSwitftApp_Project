@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DiaryView: View {
-    @State private var entries: [DiaryEntry] = []
+    @StateObject private var viewModel = DiaryViewModel()
     @State private var showingAdd = false
     @State private var newMealName = ""
     @State private var newCalories = ""
@@ -16,7 +16,7 @@ struct DiaryView: View {
     var body: some View {
         NavigationStack {
             List {
-                ForEach(entries) { entry in
+                ForEach(viewModel.entries) { entry in
                     VStack(alignment: .leading) {
                         Text(entry.mealName).font(.headline)
                         Text("\(entry.calories) kcal")
@@ -26,10 +26,7 @@ struct DiaryView: View {
                             .foregroundColor(.secondary)
                     }
                 }
-                .onDelete { indices in
-                    entries.remove(atOffsets: indices)
-                    saveEntries()
-                }
+                .onDelete { viewModel.delete(at: $0) }
             }
             .navigationTitle("Diary")
             .toolbar {
@@ -47,29 +44,14 @@ struct DiaryView: View {
                     .keyboardType(.numberPad)
                 Button("Add") {
                     if let kcal = Int(newCalories), !newMealName.isEmpty {
-                        let entry = DiaryEntry(mealName: newMealName, calories: kcal, date: Date())
-                        entries.append(entry)
-                        saveEntries()
+                        viewModel.add(mealName: newMealName, calories: kcal)
                         newMealName = ""
                         newCalories = ""
                     }
                 }
                 Button("Cancel", role: .cancel) {}
             }
-            .onAppear { loadEntries() }
-        }
-    }
-
-    private func saveEntries() {
-        if let data = try? JSONEncoder().encode(entries) {
-            UserDefaults.standard.set(data, forKey: "diary_entries")
-        }
-    }
-
-    private func loadEntries() {
-        if let data = UserDefaults.standard.data(forKey: "diary_entries"),
-           let saved = try? JSONDecoder().decode([DiaryEntry].self, from: data) {
-            entries = saved
+            .onAppear { viewModel.load() }
         }
     }
 }
