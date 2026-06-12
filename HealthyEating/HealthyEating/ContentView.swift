@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  ContentView.swift	
 //  HealthyEating
 //
 //  Created by user271132 on 6/12/26.
@@ -9,16 +9,21 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
-}
+        TabView {
+            MealListView()
+                .tabItem {
+                    Label("Przepisy", systemImage: "fork.knife")
+                }
 
-#Preview {
-    ContentView()
+            FavouritesView()
+                .tabItem {
+                    Label("Ulubione", systemImage: "heart.fill")
+                }
+
+            DiaryView()
+                .tabItem {
+                    Label("Dziennik", systemImage: "book.fill")
+                }
+        }
+    }
 }
