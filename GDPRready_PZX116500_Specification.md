@@ -39,9 +39,9 @@ User data is stored locally on the device. The application interface is built us
 
 ## 5. Potential Benefits for End Users
 
-- Easy access to a healthy recipe database — the user finds recipes with nutritional values in one place, eliminating the need to search multiple websites.
-- Conscious diet control — the ability to log consumed meals and track daily calorie intake allows the user to monitor eating habits in real time.
-- Time savings in meal planning — thanks to recipe categorisation and the favourites list, the user quickly finds trusted dishes without searching for inspiration from scratch every day.
+- Easy access to a healthy recipe database - the user finds recipes with nutritional values in one place, eliminating the need to search multiple websites.
+- Conscious diet control - the ability to log consumed meals and track daily calorie intake allows the user to monitor eating habits in real time.
+- Time savings in meal planning - thanks to recipe categorisation and the favourites list, the user quickly finds trusted dishes without searching for inspiration from scratch every day.
 
 ---
 
@@ -58,16 +58,16 @@ User data is stored locally on the device. The application interface is built us
 
 ## 7. Data Model
 
-- Meal — id, name, thumbnailURL, area, instructions, ingredients
-- DiaryEntry — id, mealName, calories, date
+- Meal - id, name, thumbnailURL, area, instructions, ingredients
+- DiaryEntry - id, mealName, calories, date
 
 ---
 
 ## 8. Main Application Views
 
-- Recipes — list of recipe cards fetched from API, with category filtering via top menu
-- Recipe Detail — image, ingredients, instructions, add/remove favourite button
-- Favourites — list of recipes marked as favourite, with swipe-to-delete
+- Recipes - list of recipe cards fetched from API, with category filtering via top menu
+- Recipe Detail - image, ingredients, instructions, add/remove favourite button
+- Favourites - list of recipes marked as favourite, with swipe-to-delete
 - Diary — form to add an entry and history of entries with daily calorie total
 
 ---
