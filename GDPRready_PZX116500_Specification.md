@@ -1,5 +1,5 @@
 ---
-# Project Specification — Healthy Eating Application
+# Project Specification (Healthy Eating Application)
 ---
 
 ## 1. Project Description
